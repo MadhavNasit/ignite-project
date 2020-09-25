@@ -6,6 +6,7 @@ import { Text } from "../text/text"
 import { Icon } from "../icon/icon"
 import { spacing } from "../../theme"
 import { translate } from "../../i18n/"
+import { useStores } from "../../models"
 
 // static styles
 const ROOT: ViewStyle = {
@@ -36,6 +37,10 @@ export function Header(props: HeaderProps) {
     titleStyle,
   } = props
   const header = headerText || (headerTx && translate(headerTx)) || ""
+  const { userAuth } = useStores()
+  const LogOut = () => {
+    userAuth.removeTokenAvaible();
+  }
 
   return (
     <View style={{ ...ROOT, ...style }}>
@@ -50,7 +55,7 @@ export function Header(props: HeaderProps) {
         <Text style={{ ...TITLE, ...titleStyle }} text={header} />
       </View>
       {rightIcon ? (
-        <Button preset="link" onPress={onRightPress}>
+        <Button preset="link" onPress={LogOut}>
           <Icon icon={rightIcon} />
         </Button>
       ) : (

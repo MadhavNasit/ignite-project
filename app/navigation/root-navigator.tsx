@@ -4,11 +4,14 @@
  * and a "main" flow (which is contained in your PrimaryNavigator) which the user
  * will use once logged in.
  */
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { NavigationContainer, NavigationContainerRef } from "@react-navigation/native"
 
 import { createNativeStackNavigator } from "react-native-screens/native-stack"
 import { PrimaryNavigator } from "./primary-navigator"
+import { AuthNavigator } from "./auth-navigator"
+import { useStores } from "../models"
+import { observer } from "mobx-react-lite"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -21,12 +24,15 @@ import { PrimaryNavigator } from "./primary-navigator"
  *   https://reactnavigation.org/docs/typescript#type-checking-the-navigator
  */
 export type RootParamList = {
-  primaryStack: undefined
+  primaryStack: undefined,
+  authStack: undefined
 }
 
 const Stack = createNativeStackNavigator<RootParamList>()
 
-const RootStack = () => {
+const RootStack = observer(() => {
+  const { userAuth } = useStores();
+
   return (
     <Stack.Navigator
       screenOptions={{
@@ -36,16 +42,30 @@ const RootStack = () => {
         stackPresentation: "modal",
       }}
     >
-      <Stack.Screen
-        name="primaryStack"
-        component={PrimaryNavigator}
-        options={{
-          headerShown: false,
-        }}
-      />
+      {userAuth.isTokenAvaible ?
+        (
+          <Stack.Screen
+            name="primaryStack"
+            component={PrimaryNavigator}
+            options={{
+              headerShown: false,
+            }}
+          />
+        )
+        :
+        (
+          <Stack.Screen
+            name="authStack"
+            component={AuthNavigator}
+            options={{
+              headerShown: false,
+            }}
+          />
+        )
+      }
     </Stack.Navigator>
   )
-}
+});
 
 export const RootNavigator = React.forwardRef<
   NavigationContainerRef,

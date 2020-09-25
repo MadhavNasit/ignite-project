@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
-import { TextStyle, View, ViewStyle } from "react-native";
+import { SafeAreaView, StatusBar, TextStyle, View, ViewStyle } from "react-native";
 import { Header, Screen, Text } from "../../components";
 import { color } from "../../theme";
 import {
@@ -9,10 +9,15 @@ import {
   statusCodes,
 } from '@react-native-community/google-signin';
 import { LoginButton, AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
+import { useStores } from "../../models";
 
-const ROOT: ViewStyle = {
+const CONTAINER: ViewStyle = {
+  flex: 1,
+  backgroundColor: color.transparent,
+}
+const SafeAreaStyle: ViewStyle = {
+  flex: 1,
   backgroundColor: color.palette.background,
-  flex: 1
 }
 
 const HeaderStyle: ViewStyle = {
@@ -44,6 +49,7 @@ const FacebookButton: ViewStyle = {
 
 export const SignInScreen = observer(function SignInScreen() {
   const [userInfo, setUserInfo] = useState({});
+  const { userAuth } = useStores();
 
   useEffect(() => {
     GoogleSignin.configure({
@@ -58,8 +64,10 @@ export const SignInScreen = observer(function SignInScreen() {
     console.log('In signin')
     try {
       await GoogleSignin.hasPlayServices();
-      const userInfo = await GoogleSignin.signIn();
-      setUserInfo(userInfo);
+      const userData = await GoogleSignin.signIn();
+      userAuth.setTokenAvaible();
+      setUserInfo(userData);
+      console.log(userInfo);
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
@@ -79,52 +87,56 @@ export const SignInScreen = observer(function SignInScreen() {
 
 
   return (
-    <Screen style={ROOT} preset="scroll">
-      <Header style={HeaderStyle} titleStyle={HeaderText} headerText="Sign In" />
-      <View style={MainView}>
-        <View style={GoogleButton}>
-          <GoogleSigninButton
-            style={{ height: 50 }}
-            size={GoogleSigninButton.Size.Standard}
-            color={GoogleSigninButton.Color.Dark}
-            onPress={() => signIn()}
-          />
-        </View>
-        <View style={FacebookButton}>
-          <LoginButton
-            publishPermissions={['publish_actions']}
-            style={{ flex: 1 }}
-            readPermissions={['public_profile', 'email']}
-            onLoginFinished={
-              (error, result) => {
-                if (error) {
-                  console.log("login has error: " + result.error);
-                } else if (result.isCancelled) {
-                  console.log("login is cancelled.");
-                } else {
-                  AccessToken.getCurrentAccessToken().then(
-                    (data) => {
-                      console.log(data);
-                      let infoRequest = new GraphRequest('/me', {
-                        httpMethod: 'GET',
-                        version: 'v2.5',
-                        parameters: {
-                          fields: {
-                            'string': 'email,name'
-                          }
-                        }
-                      }, (err, res) => {
-                        console.log(err, res);
-                      });
-                      new GraphRequestManager().addRequest(infoRequest).start();
-                    }
-                  )
+    <Screen style={CONTAINER} preset="scroll" backgroundColor={color.palette.primary}>
+      <SafeAreaView style={SafeAreaStyle}>
+        <StatusBar barStyle="light-content" backgroundColor={color.palette.primary} />
+        <Header style={HeaderStyle} titleStyle={HeaderText} headerText="Sign In" />
+        <View style={MainView}>
+          <View style={GoogleButton}>
+            <GoogleSigninButton
+              style={{ height: 50 }}
+              size={GoogleSigninButton.Size.Standard}
+              color={GoogleSigninButton.Color.Dark}
+              onPress={() => signIn()}
+            />
+          </View>
+          <View style={FacebookButton}>
+            <LoginButton
+              publishPermissions={['publish_actions']}
+              style={{ flex: 1 }}
+              // readPermissions={['public_profile']}
+              onLoginFinished={
+                (error, result) => {
+                  if (error) {
+                    console.log("login has error: " + result.error);
+                  } else if (result.isCancelled) {
+                    console.log("login is cancelled.");
+                  } else {
+                    AccessToken.getCurrentAccessToken().then(
+                      (data) => {
+                        console.log(data.token);
+                        userAuth.setTokenAvaible();
+                        // let infoRequest = new GraphRequest('/me', {
+                        //   httpMethod: 'GET',
+                        //   version: 'v2.5',
+                        //   parameters: {
+                        //     fields: {
+                        //       'string': 'email,name'
+                        //     }
+                        //   }
+                        // }, (err, res) => {
+                        //   console.log(err, res);
+                        // });
+                        // new GraphRequestManager().addRequest(infoRequest).start();
+                      }
+                    )
+                  }
                 }
               }
-            }
-            onLogoutFinished={() => console.log("logout.")} />
+              onLogoutFinished={() => console.log("logout.")} />
+          </View>
         </View>
-      </View>
+      </SafeAreaView>
     </Screen>
   )
 })
