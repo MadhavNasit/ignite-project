@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">IgniteProject</string>
+    <string name="facebook_app_id">359922665055421</string>
+    <string name="server_client_id">177794043687-2ubku16k69kpkke7bo8d7eqe3mkrlkci.apps.googleusercontent.com</string>
 </resources>

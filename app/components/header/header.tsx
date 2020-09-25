@@ -12,8 +12,8 @@ const ROOT: ViewStyle = {
   flexDirection: "row",
   paddingHorizontal: spacing[4],
   alignItems: "center",
-  paddingTop: spacing[5],
-  paddingBottom: spacing[5],
+  paddingTop: spacing[4],
+  paddingBottom: spacing[4],
   justifyContent: "flex-start",
 }
 const TITLE: TextStyle = { textAlign: "center" }
@@ -44,8 +44,8 @@ export function Header(props: HeaderProps) {
           <Icon icon={leftIcon} />
         </Button>
       ) : (
-        <View style={LEFT} />
-      )}
+          <View style={LEFT} />
+        )}
       <View style={TITLE_MIDDLE}>
         <Text style={{ ...TITLE, ...titleStyle }} text={header} />
       </View>
@@ -54,8 +54,8 @@ export function Header(props: HeaderProps) {
           <Icon icon={rightIcon} />
         </Button>
       ) : (
-        <View style={RIGHT} />
-      )}
+          <View style={RIGHT} />
+        )}
     </View>
   )
 }
