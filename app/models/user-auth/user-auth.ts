@@ -1,5 +1,4 @@
 import { Instance, SnapshotOut, types } from "mobx-state-tree"
-import { type } from "ramda"
 
 /**
  * Model description here for TypeScript hints.
