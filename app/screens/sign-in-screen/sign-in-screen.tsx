@@ -1,15 +1,38 @@
 import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
-import { SafeAreaView, StatusBar, TextStyle, View, ViewStyle } from "react-native";
-import { Header, Screen, Text } from "../../components";
+import { SafeAreaView, StatusBar, TextInput, TextStyle, View, ViewStyle } from "react-native";
+import { Button, Header, Screen, Text } from "../../components";
 import { color } from "../../theme";
 import {
   GoogleSignin,
   GoogleSigninButton,
   statusCodes,
 } from '@react-native-community/google-signin';
-import { LoginButton, AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
+import { LoginButton, AccessToken } from 'react-native-fbsdk';
 import { useStores } from "../../models";
+import { Formik } from "formik";
+import { compose } from "recompose";
+import {
+  handleTextInput,
+  withNextInputAutoFocusInput,
+  withNextInputAutoFocusForm
+} from "react-native-formik";
+import * as Yup from "yup";
+
+const Form = withNextInputAutoFocusForm(View);
+const MyInput = compose(
+  handleTextInput,
+  withNextInputAutoFocusInput
+)(TextInput);
+
+const validationSchema = Yup.object().shape({
+  email: Yup.string()
+    .required()
+    .email("well that's not an email"),
+  password: Yup.string()
+    .required()
+    .min(2, "pretty sure this will be hacked")
+});
 
 const CONTAINER: ViewStyle = {
   flex: 1,
@@ -87,11 +110,41 @@ export const SignInScreen = observer(function SignInScreen() {
 
 
   return (
-    <Screen style={CONTAINER} preset="scroll" backgroundColor={color.palette.primary}>
+    <Screen style={CONTAINER} preset="fixed" backgroundColor={color.palette.primary}>
       <SafeAreaView style={SafeAreaStyle}>
         <StatusBar barStyle="light-content" backgroundColor={color.palette.primary} />
         <Header style={HeaderStyle} titleStyle={HeaderText} headerText="Sign In" />
         <View style={MainView}>
+          <View style={{ marginBottom: 60, transform: [{ scale: 1.5 }] }} >
+            <Formik
+              initialValues={{ email: '', password: '' }}
+              onSubmit={values => console.log(values)}
+              validationSchema={validationSchema}
+              render={props => {
+                return (
+                  <Form>
+                    <View style={{ marginBottom: 8 }}>
+                      <MyInput
+                        placeholder='Email'
+                        label="Email" name="email" type="email" style={{ borderColor: 'black', borderWidth: 1, borderRadius: 5, width: 200, height: 25 }} />
+                      {props.errors.email &&
+                        <Text text={props.errors.email} style={{ fontSize: 12, color: 'red' }} />
+                      }
+                    </View>
+                    <View style={{ marginBottom: 8 }}>
+                      <MyInput
+                        placeholder='Password'
+                        label="Password" name="password" type="password" style={{ borderColor: 'black', borderWidth: 1, borderRadius: 5, width: 200, height: 25 }} />
+                      {props.errors.password &&
+                        <Text text={props.errors.password} style={{ fontSize: 12, color: 'red' }} />
+                      }
+                    </View>
+                    <Button onPress={props.handleSubmit} text="SUBMIT" />
+                  </Form>
+                );
+              }}
+            />
+          </View>
           <View style={GoogleButton}>
             <GoogleSigninButton
               style={{ height: 50 }}
