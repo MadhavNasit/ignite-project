@@ -120,30 +120,29 @@ export const SignInScreen = observer(function SignInScreen() {
               initialValues={{ email: '', password: '' }}
               onSubmit={values => console.log(values)}
               validationSchema={validationSchema}
-              render={props => {
-                return (
-                  <Form>
-                    <View style={{ marginBottom: 8 }}>
-                      <MyInput
-                        placeholder='Email'
-                        label="Email" name="email" type="email" style={{ borderColor: 'black', borderWidth: 1, borderRadius: 5, width: 200, height: 25 }} />
-                      {props.errors.email &&
-                        <Text text={props.errors.email} style={{ fontSize: 12, color: 'red' }} />
-                      }
-                    </View>
-                    <View style={{ marginBottom: 8 }}>
-                      <MyInput
-                        placeholder='Password'
-                        label="Password" name="password" type="password" style={{ borderColor: 'black', borderWidth: 1, borderRadius: 5, width: 200, height: 25 }} />
-                      {props.errors.password &&
-                        <Text text={props.errors.password} style={{ fontSize: 12, color: 'red' }} />
-                      }
-                    </View>
-                    <Button onPress={props.handleSubmit} text="SUBMIT" />
-                  </Form>
-                );
-              }}
-            />
+            >
+              {({ handleSubmit, errors }) => (
+                <Form>
+                  <View style={{ marginBottom: 8 }}>
+                    <MyInput
+                      placeholder='Email'
+                      label="Email" name="email" type="email" style={{ borderColor: 'black', borderWidth: 1, borderRadius: 5, width: 200, height: 25 }} />
+                    {errors.email &&
+                      <Text text={errors.email} style={{ fontSize: 12, color: 'red' }} />
+                    }
+                  </View>
+                  <View style={{ marginBottom: 8 }}>
+                    <MyInput
+                      placeholder='Password'
+                      label="Password" name="password" type="password" style={{ borderColor: 'black', borderWidth: 1, borderRadius: 5, width: 200, height: 25 }} />
+                    {errors.password &&
+                      <Text text={errors.password} style={{ fontSize: 12, color: 'red' }} />
+                    }
+                  </View>
+                  <Button onPress={handleSubmit} text="SUBMIT" />
+                </Form>
+              )}
+            </Formik>
           </View>
           <View style={GoogleButton}>
             <GoogleSigninButton
@@ -169,18 +168,6 @@ export const SignInScreen = observer(function SignInScreen() {
                       (data) => {
                         console.log(data.token);
                         userAuth.setTokenAvaible();
-                        // let infoRequest = new GraphRequest('/me', {
-                        //   httpMethod: 'GET',
-                        //   version: 'v2.5',
-                        //   parameters: {
-                        //     fields: {
-                        //       'string': 'email,name'
-                        //     }
-                        //   }
-                        // }, (err, res) => {
-                        //   console.log(err, res);
-                        // });
-                        // new GraphRequestManager().addRequest(infoRequest).start();
                       }
                     )
                   }
@@ -190,6 +177,6 @@ export const SignInScreen = observer(function SignInScreen() {
           </View>
         </View>
       </SafeAreaView>
-    </Screen>
+    </Screen >
   )
 })
