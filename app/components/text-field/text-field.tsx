@@ -13,7 +13,7 @@ const CONTAINER: ViewStyle = {
 
 // the base styling for the TextInput
 const INPUT: TextStyle = {
-  fontFamily: typography.primary,
+  fontFamily: typography.regular,
   color: color.text,
   minHeight: 44,
   fontSize: 18,

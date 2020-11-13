@@ -18,6 +18,10 @@
 		2DCD954D1E0B4F2C00145EB5 /* IgniteProjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* IgniteProjectTests.m */; };
 		42D6C9A142B607AEF28A8ECE /* libPods-IgniteProject-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED9AB8782F56623283C4F953 /* libPods-IgniteProject-tvOS.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		9A7B021E255E6D1600851209 /* GTWalsheimPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9A7B021A255E6D1600851209 /* GTWalsheimPro-Regular.ttf */; };
+		9A7B021F255E6D1600851209 /* GTWalsheimPro-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9A7B021B255E6D1600851209 /* GTWalsheimPro-Bold.ttf */; };
+		9A7B0220255E6D1600851209 /* GTWalsheimPro-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9A7B021C255E6D1600851209 /* GTWalsheimPro-Medium.ttf */; };
+		9A7B0221255E6D1600851209 /* GTWalsheimPro-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9A7B021D255E6D1600851209 /* GTWalsheimPro-Light.ttf */; };
 		F6923941F873073D2807CE3A /* libPods-IgniteProject-IgniteProjectTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EC7D9C07D09BFA581319DFE9 /* libPods-IgniteProject-IgniteProjectTests.a */; };
 		FE529AB5A932123ABBC3307F /* libPods-IgniteProject-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D5B2FD0231189554D149A4F /* libPods-IgniteProject-tvOSTests.a */; };
 /* End PBXBuildFile section */
@@ -59,6 +63,10 @@
 		7D5B2FD0231189554D149A4F /* libPods-IgniteProject-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IgniteProject-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = IgniteProject/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9757B3C843FF96B8EA7667FD /* Pods-IgniteProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IgniteProject.debug.xcconfig"; path = "Target Support Files/Pods-IgniteProject/Pods-IgniteProject.debug.xcconfig"; sourceTree = "<group>"; };
+		9A7B021A255E6D1600851209 /* GTWalsheimPro-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GTWalsheimPro-Regular.ttf"; sourceTree = "<group>"; };
+		9A7B021B255E6D1600851209 /* GTWalsheimPro-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GTWalsheimPro-Bold.ttf"; sourceTree = "<group>"; };
+		9A7B021C255E6D1600851209 /* GTWalsheimPro-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GTWalsheimPro-Medium.ttf"; sourceTree = "<group>"; };
+		9A7B021D255E6D1600851209 /* GTWalsheimPro-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GTWalsheimPro-Light.ttf"; sourceTree = "<group>"; };
 		DD3B0E9875642FC0D378A597 /* Pods-IgniteProject-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IgniteProject-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-IgniteProject-tvOSTests/Pods-IgniteProject-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		E34A2725BC1EF5F8DE174712 /* Pods-IgniteProject-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IgniteProject-tvOS.release.xcconfig"; path = "Target Support Files/Pods-IgniteProject-tvOS/Pods-IgniteProject-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		E5D2AA312F298E27961634A0 /* libPods-IgniteProject.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IgniteProject.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -161,8 +169,14 @@
 				1944058A14A9C319D64F7081 /* Pods-IgniteProject-tvOSTests.debug.xcconfig */,
 				DD3B0E9875642FC0D378A597 /* Pods-IgniteProject-tvOSTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		7A41860D85F84AA1A1FB44DD /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -175,6 +189,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				9A7B0219255E6CD300851209 /* fonts */,
 				13B07FAE1A68108700A75B9A /* IgniteProject */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* IgniteProjectTests */,
@@ -199,13 +214,16 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		7A41860D85F84AA1A1FB44DD /* Resources */ = {
-			isa = "PBXGroup";
+		9A7B0219255E6CD300851209 /* fonts */ = {
+			isa = PBXGroup;
 			children = (
+				9A7B021B255E6D1600851209 /* GTWalsheimPro-Bold.ttf */,
+				9A7B021D255E6D1600851209 /* GTWalsheimPro-Light.ttf */,
+				9A7B021C255E6D1600851209 /* GTWalsheimPro-Medium.ttf */,
+				9A7B021A255E6D1600851209 /* GTWalsheimPro-Regular.ttf */,
 			);
-			name = Resources;
+			path = fonts;
 			sourceTree = "<group>";
-			path = "";
 		};
 /* End PBXGroup section */
 
@@ -349,7 +367,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A7B0220255E6D1600851209 /* GTWalsheimPro-Medium.ttf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				9A7B021E255E6D1600851209 /* GTWalsheimPro-Regular.ttf in Resources */,
+				9A7B021F255E6D1600851209 /* GTWalsheimPro-Bold.ttf in Resources */,
+				9A7B0221255E6D1600851209 /* GTWalsheimPro-Light.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

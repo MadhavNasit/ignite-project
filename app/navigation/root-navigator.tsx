@@ -9,6 +9,7 @@ import { NavigationContainer, NavigationContainerRef } from "@react-navigation/n
 
 import { createNativeStackNavigator } from "react-native-screens/native-stack"
 import { PrimaryNavigator } from "./primary-navigator"
+import { AuthenticateScreen } from "../screens"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -38,7 +39,7 @@ const RootStack = () => {
     >
       <Stack.Screen
         name="primaryStack"
-        component={PrimaryNavigator}
+        component={AuthenticateScreen}
         options={{
           headerShown: false,
         }}

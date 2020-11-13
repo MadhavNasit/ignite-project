@@ -1,3 +1,7 @@
+require("../app/components/custom-input/custom-input.story")
+require("../app/components/tab/tab.story")
+require("../app/components/login/login.story")
+require("../app/components/signin/signin.story")
 require("../app/components/text/text.story")
 require("../app/components/button/button.story")
 require("../app/components/form-row/form-row.story")
