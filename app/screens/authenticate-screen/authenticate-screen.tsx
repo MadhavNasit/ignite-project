@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { SafeAreaView, View, StatusBar, TouchableOpacity, Image, ViewStyle, TextStyle, ImageStyle } from 'react-native';
+import { SafeAreaView, View, StatusBar, TouchableOpacity, ViewStyle, TextStyle, ImageStyle, Platform } from 'react-native';
 import { observer } from "mobx-react-lite"
-import { Icon, Login, Screen, Signin, Tab, Text } from "../../components"
+import { Icon, Login, Signin, Tab, Text } from "../../components"
 import { color, typography } from '../../theme';
 import scale, { verticalScale } from '../../utils/scale';
 
@@ -12,8 +12,7 @@ const Container: ViewStyle = {
 
 // HeadingStyles
 const HeadingViewStyle: ViewStyle = {
-  height: verticalScale(172),
-  // height: verticalScale(172) - getStatusBarHeight(true),
+  height: verticalScale(172) - (Platform.OS == 'ios' ? 20 : StatusBar.currentHeight),
   paddingLeft: scale(27),
   paddingRight: scale(25),
   justifyContent: 'center'
