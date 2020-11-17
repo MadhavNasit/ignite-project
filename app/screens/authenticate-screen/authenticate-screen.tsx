@@ -4,6 +4,7 @@ import { observer } from "mobx-react-lite"
 import { Icon, Login, Signin, Tab, Text } from "../../components"
 import { color, typography } from '../../theme';
 import scale, { verticalScale } from '../../utils/scale';
+import { useNavigation } from '@react-navigation/native';
 
 const Container: ViewStyle = {
   flex: 1,
@@ -114,6 +115,8 @@ const GuestText: TextStyle = {
 
 
 export const AuthenticateScreen = observer(function AuthenticateScreen() {
+
+  const navigation = useNavigation();
   /**
    * true - Sign Up
    * false - Log In
@@ -132,6 +135,9 @@ export const AuthenticateScreen = observer(function AuthenticateScreen() {
     )
   }
 
+  /**
+   * Social Media Button - render optional sign in options using social media
+   */
   const SocialMediaButton = ({ icon, name, bgColor }) => {
     return (
       <TouchableOpacity style={[SocialMediaButtonStyle, { backgroundColor: bgColor }]}>
@@ -157,6 +163,7 @@ export const AuthenticateScreen = observer(function AuthenticateScreen() {
           setIsFirstScreen={(flag) => setIsFirstScreen(flag)}
           activeScreen={isFirstScreen}
         />
+        {/* form view of sign up & log in */}
         <View>
           {isFirstScreen ? (
             <Signin
@@ -169,6 +176,7 @@ export const AuthenticateScreen = observer(function AuthenticateScreen() {
             )}
         </View>
       </View>
+      {/* Optional sign up/log in methods and terms and codition */}
       <View style={SignupViaView}>
         <Text style={TextLight}>{`or Sign up via`}</Text>
         <View
@@ -196,7 +204,9 @@ export const AuthenticateScreen = observer(function AuthenticateScreen() {
             <Text style={TCText}>{`Terms & Conditions & Provacy Policy`}</Text>
           </>
         }
-        <Text style={GuestText}>{`Skip & Continue as Guest`}</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('productListing')}>
+          <Text style={GuestText}>{`Skip & Continue as Guest`}</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView >
   );
