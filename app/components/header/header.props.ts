@@ -25,12 +25,14 @@ export interface HeaderProps {
   /**
    * Icon that should appear on the right
    */
-  rightIcon?: IconTypes
+  rightFirstIcon?: IconTypes
+  rightSecondIcon?: IconTypes
 
   /**
    * What happens when you press the right icon
    */
-  onRightPress?(): void
+  onFirstRightPress?(): void
+  onSecondRightPress?(): void
 
   /**
    * Container style overrides.
@@ -41,4 +43,6 @@ export interface HeaderProps {
    * Title style overrides.
    */
   titleStyle?: TextStyle
+
+  sortFilter?: Boolean
 }

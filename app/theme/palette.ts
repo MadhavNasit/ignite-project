@@ -21,4 +21,7 @@ export const palette = {
   google: 'rgb(230, 94, 82)',
   apple: 'rgb( 62, 69, 79)',
   charcoalGrey: 'rgb( 62, 69, 79)',
+  border: 'rgb( 219,219,219)',
+  lightnavyBlue: 'rgb( 48,69,140)',
+
 }

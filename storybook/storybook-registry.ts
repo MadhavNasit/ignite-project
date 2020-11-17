@@ -1,3 +1,5 @@
+require("../app/components/product/product.story")
+require("../app/components/sort-filter/sort-filter.story")
 require("../app/components/custom-input/custom-input.story")
 require("../app/components/tab/tab.story")
 require("../app/components/login/login.story")
