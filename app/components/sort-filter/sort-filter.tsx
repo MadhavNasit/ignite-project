@@ -1,5 +1,5 @@
 import * as React from "react"
-import { ImageStyle, TextStyle, View, ViewStyle } from "react-native"
+import { Animated, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { color, typography } from "../../theme"
 import { Text } from "../"
 import { Icon } from "../icon/icon"
@@ -33,15 +33,17 @@ export interface SortFilterProps {
    * An optional style override useful for padding & margin.
    */
   style?: ViewStyle
+  translateY?
 }
 
 /**
  * Describe your component here
  */
 export function SortFilter(props: SortFilterProps) {
+  const { translateY } = props;
 
   return (
-    <View style={CONTAINER}>
+    <Animated.View style={[CONTAINER, { transform: [{ translateY: translateY }] }]}>
       <View style={[BOX, { borderRightWidth: 0.5, borderRightColor: color.palette.border }]} >
         <Icon icon='menu' style={IconStyle} />
         <Text text="Sort" style={BoxText} />
@@ -50,6 +52,6 @@ export function SortFilter(props: SortFilterProps) {
         <Icon icon='filter' style={IconStyle} />
         <Text text="Filter" style={BoxText} />
       </View>
-    </View>
+    </Animated.View>
   )
 }

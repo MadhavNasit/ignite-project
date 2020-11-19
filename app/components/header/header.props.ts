@@ -45,4 +45,7 @@ export interface HeaderProps {
   titleStyle?: TextStyle
 
   sortFilter?: Boolean
+
+  headerHeight?
+  translateY?
 }

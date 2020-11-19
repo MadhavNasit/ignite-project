@@ -1,5 +1,5 @@
 import React from "react"
-import { View, ViewStyle, TextStyle, ImageStyle } from "react-native"
+import { View, ViewStyle, TextStyle, ImageStyle, Animated } from "react-native"
 import { HeaderProps } from "./header.props"
 import { Button } from "../button/button"
 import { Text } from "../text/text"
@@ -58,14 +58,15 @@ export function Header(props: HeaderProps) {
     sortFilter,
     style,
     titleStyle,
+    headerHeight,
+    translateY
   } = props
   const header = headerText || (headerTx && translate(headerTx)) || ""
 
   return (
-
-    <View style={{ overflow: 'hidden', paddingBottom: 5 }}>
+    <Animated.View style={{ overflow: 'hidden', paddingBottom: 5, height: headerHeight }}>
       <View style={SHADOW}>
-        <View style={{ ...ROOT, ...style }}>
+        <Animated.View style={[{ ...ROOT, ...style, transform: [{ translateY: translateY }], }]}>
           {leftIcon ? (
             <Button preset="link" onPress={onLeftPress} style={{ flex: 1 }}>
               <Icon icon={leftIcon} style={ICONSTYLE} />
@@ -88,11 +89,12 @@ export function Header(props: HeaderProps) {
           ) : (
               <View style={RIGHT} />
             )}
-        </View>
+        </Animated.View>
         {sortFilter &&
-          <SortFilter />
+          <SortFilter
+            translateY={translateY} />
         }
       </View>
-    </View>
+    </Animated.View>
   )
 }

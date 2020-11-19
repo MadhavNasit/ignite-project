@@ -1,6 +1,6 @@
-import React from "react"
+import React, { useRef } from "react"
 import { observer } from "mobx-react-lite"
-import { FlatList, TextStyle, ViewStyle } from "react-native"
+import { Animated, SafeAreaView, TextStyle, View, ViewStyle } from "react-native"
 import { Header, Product, Screen } from "../../components"
 import { color, typography } from "../../theme"
 import scale from "../../utils/scale"
@@ -15,6 +15,11 @@ const HeaderText: TextStyle = {
   fontSize: scale(15),
   lineHeight: scale(18),
   fontFamily: typography.medium
+}
+const FlatListContainer: ViewStyle = {
+  flexDirection: 'column',
+  marginVertical: scale(10),
+  marginLeft: scale(5)
 }
 
 const Array = [
@@ -31,32 +36,71 @@ const Array = [
 export const ProductListingScreen = observer(function ProductListingScreen() {
 
   const navigation = useNavigation();
+  const scrollRef = useRef(null);
+  const scrollY = useRef(new Animated.Value(0)).current;
+
+  const translateY = scrollY.interpolate({
+    inputRange: [0, 42],
+    outputRange: [0, -42],
+    extrapolate: 'clamp',
+  });
+  const headerHeight = scrollY.interpolate({
+    inputRange: [0, 46],
+    outputRange: [90, 46],
+    extrapolate: 'clamp',
+  });
 
   return (
     <Screen style={ROOT} preset="fixed" statusBar='dark-content'>
-      <Header
-        headerText='Browse Towel'
-        titleStyle={HeaderText}
-        leftIcon={'back'}
-        rightFirstIcon='notification'
-        onLeftPress={() => navigation.navigate('primaryStack')}
-        rightSecondIcon='cart'
-        sortFilter
-      />
-      <FlatList
-        data={Array}
-        keyExtractor={(item, index) => index.toString()}
-        contentContainerStyle={{ flexDirection: 'column', alignItems: 'center', marginVertical: scale(10) }}
-        numColumns={2}
-        renderItem={({ item, index }) => {
-          return (
-            <Product
-              index={index}
-              item={item}
-            />
-          )
-        }}
-      />
+      <SafeAreaView style={{ flex: 1 }}>
+        <Header
+          headerText='Browse Towel'
+          titleStyle={HeaderText}
+          leftIcon={'back'}
+          rightFirstIcon='notification'
+          onLeftPress={() => navigation.navigate('primaryStack')}
+          rightSecondIcon='cart'
+          headerHeight={headerHeight}
+          translateY={translateY}
+          sortFilter
+        />
+        <Animated.FlatList
+          ref={scrollRef}
+          data={Array}
+          keyExtractor={(item, index) => index.toString()}
+          contentContainerStyle={FlatListContainer}
+          numColumns={2}
+          bounces={false}
+          onScroll={Animated.event([
+            { nativeEvent: { contentOffset: { y: scrollY } } }
+          ], { useNativeDriver: false })}
+          onScrollEndDrag={(event) => {
+            if (event.nativeEvent.contentOffset.y < 10) {
+              Animated.timing(scrollY, {
+                toValue: 0,
+                duration: 300,
+                useNativeDriver: false
+              }).start()
+            }
+            else if (event.nativeEvent.contentOffset.y <= 46) {
+              Animated.timing(scrollY, {
+                toValue: 46,
+                duration: 300,
+                useNativeDriver: false
+              }).start()
+            }
+          }
+          }
+          renderItem={({ item, index }) => {
+            return (
+              <Product
+                index={index}
+                item={item}
+              />
+            )
+          }}
+        />
+      </SafeAreaView>
     </Screen>
   )
 })
