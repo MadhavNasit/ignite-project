@@ -8,8 +8,7 @@ import React from "react"
 import { NavigationContainer, NavigationContainerRef } from "@react-navigation/native"
 
 import { createNativeStackNavigator } from "react-native-screens/native-stack"
-import { PrimaryNavigator } from "./primary-navigator"
-import { AuthenticateScreen, ProductListingScreen } from "../screens"
+import { AuthenticateScreen, ProductListingScreen, ProductWishlistScreen } from "../screens"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -24,6 +23,7 @@ import { AuthenticateScreen, ProductListingScreen } from "../screens"
 export type RootParamList = {
   primaryStack: undefined,
   productListing: undefined
+  wishlist: undefined
 }
 
 const Stack = createNativeStackNavigator<RootParamList>()
@@ -48,6 +48,13 @@ const RootStack = () => {
       <Stack.Screen
         name="productListing"
         component={ProductListingScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="wishlist"
+        component={ProductWishlistScreen}
         options={{
           headerShown: false,
         }}

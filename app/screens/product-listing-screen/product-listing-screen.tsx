@@ -1,10 +1,10 @@
-import React, { useRef } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { observer } from "mobx-react-lite"
 import { Animated, SafeAreaView, TextStyle, View, ViewStyle } from "react-native"
 import { Header, Product, Screen } from "../../components"
 import { color, typography } from "../../theme"
 import scale from "../../utils/scale"
-import { useNavigation } from "@react-navigation/native"
+import { useIsFocused, useNavigation } from "@react-navigation/native"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.palette.white,
@@ -22,15 +22,15 @@ const FlatListContainer: ViewStyle = {
   marginLeft: scale(5)
 }
 
-const Array = [
-  { image: 'towel1', productName: 'Product 1', price: 220 },
-  { image: 'towel2', productName: 'Product 2', price: 220 },
-  { image: 'towel2', productName: 'Product 3', price: 42 },
-  { image: 'towel1', productName: 'Product 4', price: 80 },
-  { image: 'towel1', productName: 'Product 5', price: 220 },
-  { image: 'towel2', productName: 'Product 6', price: 220 },
-  { image: 'towel2', productName: 'Product 7', price: 42 },
-  { image: 'towel1', productName: 'Product 8', price: 80 }
+const ProductData = [
+  { id: 1, image: 'towel1', productName: 'Product 1', price: 220, isWishlisted: false },
+  { id: 2, image: 'towel2', productName: 'Product 2', price: 220, isWishlisted: false },
+  { id: 3, image: 'towel2', productName: 'Product 3', price: 42, isWishlisted: false },
+  { id: 4, image: 'towel1', productName: 'Product 4', price: 80, isWishlisted: false },
+  { id: 5, image: 'towel1', productName: 'Product 5', price: 220, isWishlisted: false },
+  { id: 6, image: 'towel2', productName: 'Product 6', price: 220, isWishlisted: false },
+  { id: 7, image: 'towel2', productName: 'Product 7', price: 42, isWishlisted: false },
+  { id: 8, image: 'towel1', productName: 'Product 8', price: 80, isWishlisted: false }
 ]
 
 export const ProductListingScreen = observer(function ProductListingScreen() {
@@ -38,6 +38,14 @@ export const ProductListingScreen = observer(function ProductListingScreen() {
   const navigation = useNavigation();
   const scrollRef = useRef(null);
   const scrollY = useRef(new Animated.Value(0)).current;
+  const [dataChanged, setDataChanged] = useState(false);
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    if (isFocused) {
+      setDataChanged(!dataChanged)
+    }
+  }, [isFocused]);
 
   const translateY = scrollY.interpolate({
     inputRange: [0, 42],
@@ -50,6 +58,12 @@ export const ProductListingScreen = observer(function ProductListingScreen() {
     extrapolate: 'clamp',
   });
 
+  const ManageWishlist = (id, isWishlisted) => {
+    let index = ProductData.findIndex(x => x.id == id);
+    ProductData[index].isWishlisted = !isWishlisted;
+    setDataChanged(!dataChanged);
+  }
+
   return (
     <Screen style={ROOT} preset="fixed" statusBar='dark-content'>
       <SafeAreaView style={{ flex: 1 }}>
@@ -59,6 +73,7 @@ export const ProductListingScreen = observer(function ProductListingScreen() {
           leftIcon={'back'}
           rightFirstIcon='notification'
           onLeftPress={() => navigation.navigate('primaryStack')}
+          onFirstRightPress={() => navigation.navigate('wishlist', { ProductData: ProductData })}
           rightSecondIcon='cart'
           headerHeight={headerHeight}
           translateY={translateY}
@@ -66,7 +81,7 @@ export const ProductListingScreen = observer(function ProductListingScreen() {
         />
         <Animated.FlatList
           ref={scrollRef}
-          data={Array}
+          data={ProductData}
           keyExtractor={(item, index) => index.toString()}
           contentContainerStyle={FlatListContainer}
           numColumns={2}
@@ -91,11 +106,13 @@ export const ProductListingScreen = observer(function ProductListingScreen() {
             }
           }
           }
+          extraData={dataChanged}
           renderItem={({ item, index }) => {
             return (
               <Product
                 index={index}
                 item={item}
+                setWishlist={(id, isWishlisted) => ManageWishlist(id, isWishlisted)}
               />
             )
           }}

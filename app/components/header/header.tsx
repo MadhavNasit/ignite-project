@@ -59,7 +59,7 @@ export function Header(props: HeaderProps) {
     style,
     titleStyle,
     headerHeight,
-    translateY
+    translateY,
   } = props
   const header = headerText || (headerTx && translate(headerTx)) || ""
 

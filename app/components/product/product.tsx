@@ -71,20 +71,19 @@ const AddCartButtonText: TextStyle = {
 export interface ProductProps {
   item?
   index?
+  setWishlist
 }
 
 /**
  * Describe your component here
  */
 export function Product(props: ProductProps) {
-  const { item, index } = props
-
-  const [isWhishListed, setIsWhishListed] = React.useState(false);
+  const { item, index, setWishlist } = props
 
   return (
     <View key={index} style={CONTAINER} >
-      <TouchableOpacity onPress={() => setIsWhishListed(!isWhishListed)} style={WhishListButton} >
-        <Icon icon={isWhishListed ? 'heartFilled' : 'heart'} style={WhishListButtonIcon} />
+      <TouchableOpacity onPress={() => setWishlist(item.id, item.isWishlisted)} style={WhishListButton} >
+        <Icon icon={item.isWishlisted ? 'heartFilled' : 'heart'} style={WhishListButtonIcon} />
       </TouchableOpacity>
       <Icon icon={item.image} style={ProductImage} />
       <View style={ProductNameView}>
